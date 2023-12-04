@@ -301,9 +301,8 @@ namespace PdfSharpCore.Pdf.AcroForms
             { }
 
             PdfAcroFieldCollection(PdfDocument document)
-              : base(document)
+                : base(document)
             { }
-
 
             /// <summary>
             /// Gets the names of all fields in the collection.
