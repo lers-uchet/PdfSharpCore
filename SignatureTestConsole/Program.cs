@@ -46,7 +46,7 @@ namespace TestConsole
                 Location = "Paris",
                 Reason = "Test signatures",
                 Rectangle = new XRect(36.0, 735.0, 200.0, 50.0),
-                AppearanceHandler = new Program.SignAppearenceHandler()
+                AppearanceHandler = new SignAppearenceHandler()
             };
             
             PdfSignatureHandler pdfSignatureHandler = new PdfSignatureHandler(new DefaultSigner(Program.GetCertificate()), null, options);
@@ -57,7 +57,7 @@ namespace TestConsole
         private static X509Certificate2 GetCertificate()
         {
             // add yours here
-            return new X509Certificate2("c:\\repos\\Secrets\\CodeSign\\Lers-SelfSigned.pfx", "12345", X509KeyStorageFlags.Exportable);
+            return new X509Certificate2("c:\\repos\\Secrets\\CodeSign\\Lers-SelfSigned.pfx", "doZa34Pqmvui-76", X509KeyStorageFlags.Exportable);
         }
 
         private class SignAppearenceHandler : ISignatureAppearanceHandler

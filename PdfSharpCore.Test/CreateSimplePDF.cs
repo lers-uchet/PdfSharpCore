@@ -3,9 +3,7 @@ using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
 using PdfSharpCore.Test.Helpers;
 using PdfSharpCore.Utils;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
+using SkiaSharp;
 using System.IO;
 using System.Text;
 using Xunit;
@@ -77,7 +75,7 @@ public class CreateSimplePdf
     }
 
     [Fact]
-    public void CreateTestPdfWithImageViaImageSharp()
+    public void CreateTestPdfWithImageViaSkiaSharp()
     {
         using var stream = new MemoryStream();
         var document = new PdfDocument();
@@ -86,13 +84,46 @@ public class CreateSimplePdf
 
         var renderer = XGraphics.FromPdfPage(pageNewRenderer);
 
-        // Load image for ImageSharp and apply a simple mutation:
-        var image = Image.Load<Rgb24>(PathHelper.GetInstance().GetAssetPath("lenna.png"));
-        image.Mutate(ctx => ctx.Grayscale());
+        // Load image for SkiaSharp:
+        var image = SKBitmap.Decode(PathHelper.GetInstance().GetAssetPath("lenna.png"));
+        Assert.NotNull(image);
 
-        // create XImage from that same ImageSharp image:
-        var source = ImageSharpImageSource<Rgb24>.FromImageSharpImage(image, image.Metadata.DecodedImageFormat);
+        // create XImage from that same SkiaSharp bitmap:
+        var source = SkiaSharpImageSource.FromSkiaSharpImage(image);
         var img = XImage.FromImageSource(source);
+
+        renderer.DrawImage(img, new XPoint(0, 0));
+
+        document.Save(stream);
+        stream.Position = 0;
+        Assert.True(stream.Length > 1);
+        ReadStreamAndVerifyPdfHeaderSignature(stream);
+    }
+
+    [Fact]
+    public void CreateTestPdfWithTransparentImageViaSkiaSharp()
+    {
+        using var stream = new MemoryStream();
+        var document = new PdfDocument();
+
+        var pageNewRenderer = document.AddPage();
+
+        var renderer = XGraphics.FromPdfPage(pageNewRenderer);
+
+        // Create a transparent bitmap. This exercises the PDF bitmap path
+        // because SkiaSharp cannot encode BMP.
+        var image = new SKBitmap(new SKImageInfo(16, 16, SKColorType.Bgra8888, SKAlphaType.Unpremul));
+        using (var canvas = new SKCanvas(image))
+        {
+            canvas.Clear(SKColors.Transparent);
+            using var paint = new SKPaint { Color = new SKColor(255, 0, 0, 128) };
+            canvas.DrawRect(0, 0, 8, 16, paint);
+        }
+
+        var source = SkiaSharpImageSource.FromSkiaSharpImage(image);
+        var img = XImage.FromImageSource(source);
+
+        Assert.Equal(XImageFormat.Png, img.Format);
 
         renderer.DrawImage(img, new XPoint(0, 0));
 
