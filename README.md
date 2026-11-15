@@ -6,7 +6,7 @@
 
 **PdfSharpCore** is a partial port of [PdfSharp.Xamarin](https://github.com/roceh/PdfSharp.Xamarin/) for .NET Standard.
 Additionally MigraDoc has been ported as well (from version 1.32).
-Image support has been implemented with [SkiaSharp](https://github.com/mono/SkiaSharp) and Fonts support with [SixLabors.Fonts](https://github.com/SixLabors/Fonts).
+Image and font support has been implemented with [SkiaSharp](https://github.com/mono/SkiaSharp).
 
 
 ## Table of Contents
@@ -54,7 +54,4 @@ We appreciate feedback and contribution to this repo!
 
 This software is released under the MIT License. See the [LICENSE](LICENCE.md) file for more info.
 
-PdfSharpCore relies on the following projects, that are not under the MIT license:
-
-* *SixLabors.Fonts*
-  * SixLabors.Fonts, a library which PdfSharpCore relies upon, is licensed under Apache 2.0 when distributed as part of PdfSharpCore. The SixLabors.Fonts license covers all other usage, see https://github.com/SixLabors/Fonts/blob/master/LICENSE
+PdfSharpCore relies on [SkiaSharp](https://github.com/mono/SkiaSharp), which is licensed under the MIT license.

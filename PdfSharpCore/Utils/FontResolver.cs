@@ -8,7 +8,7 @@ using PdfSharpCore.Internal;
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Fonts;
 
-using SixLabors.Fonts;
+using SkiaSharp;
 
 
 namespace PdfSharpCore.Utils
@@ -76,38 +76,38 @@ namespace PdfSharpCore.Utils
 
         private readonly struct FontFileInfo
         {
-            private FontFileInfo(string path, FontDescription fontDescription)
+            private FontFileInfo(string path, string familyName, XFontStyle fontStyle)
             {
                 this.Path = path;
-                this.FontDescription = fontDescription;
+                this.FamilyName = familyName;
+                this.FontStyle = fontStyle;
             }
 
             public string Path { get; }
 
-            public FontDescription FontDescription { get; }
+            public string FamilyName { get; }
 
-            public string FamilyName => this.FontDescription.FontFamilyInvariantCulture;
-
-
-            public XFontStyle GuessFontStyle()
-            {
-                switch (this.FontDescription.Style)
-                {
-                    case FontStyle.Bold:
-                        return XFontStyle.Bold;
-                    case FontStyle.Italic:
-                        return XFontStyle.Italic;
-                    case FontStyle.BoldItalic:
-                        return XFontStyle.BoldItalic;
-                    default:
-                        return XFontStyle.Regular;
-                }
-            }
+            public XFontStyle FontStyle { get; }
 
             public static FontFileInfo Load(string path)
             {
-                FontDescription fontDescription = FontDescription.LoadDescription(path);
-                return new FontFileInfo(path, fontDescription);
+                using (SKTypeface typeface = SKTypeface.FromFile(path))
+                {
+                    if (typeface == null)
+                        throw new System.InvalidOperationException("Could not read font file '" + path + "'.");
+
+                    XFontStyle fontStyle;
+                    if (typeface.IsBold && typeface.IsItalic)
+                        fontStyle = XFontStyle.BoldItalic;
+                    else if (typeface.IsBold)
+                        fontStyle = XFontStyle.Bold;
+                    else if (typeface.IsItalic)
+                        fontStyle = XFontStyle.Italic;
+                    else
+                        fontStyle = XFontStyle.Regular;
+
+                    return new FontFileInfo(path, typeface.FamilyName, fontStyle);
+                }
             }
         }
 
@@ -160,7 +160,7 @@ namespace PdfSharpCore.Utils
             {
                 foreach (FontFileInfo info in fontList)
                 {
-                    XFontStyle style = info.GuessFontStyle();
+                    XFontStyle style = info.FontStyle;
                     if (!font.FontFiles.ContainsKey(style))
                         font.FontFiles.Add(style, info.Path);
                 }
