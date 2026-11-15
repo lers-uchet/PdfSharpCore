@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Stefan Steiger and Contributors</Authors>
@@ -30,11 +29,4 @@
   <ItemGroup>
     <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="SharpZipLib" Version="1.4.2" />
-    <PackageReference Include="SixLabors.Fonts" Version="2.1.3" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.1" />
-  </ItemGroup>
-
 </Project>

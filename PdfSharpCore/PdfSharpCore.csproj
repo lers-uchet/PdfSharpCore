@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Lers.PdfSharp</PackageId>
@@ -11,13 +10,13 @@
 PdfSharpCore is a partial port of PdfSharp.Xamarin for .NET Core Additionally MigraDoc has been ported as well (from version 1.32). Images have been implemented with SkiaSharp from https://www.nuget.org/packages/SkiaSharp</Description>
     <Copyright>Copyright (c) 2005-2007 empira Software GmbH, Cologne (Germany)</Copyright>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/ststeiger/PdfSharpCore</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ststeiger/PdfSharpCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/lers-uchet/PdfSharpCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/lers-uchet/PdfSharpCore</RepositoryUrl>
     <PackageReleaseNotes>PdfSharpCore is a partial port of PdfSharp.Xamarin for .NET Core Additionally MigraDoc has been ported as well (from version 1.32)</PackageReleaseNotes>
     <summary>PdfSharp for .NET Core</summary>
     <IsTrimmable>true</IsTrimmable>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
-    <Version>1.2.1</Version>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -46,7 +45,6 @@ PdfSharpCore is a partial port of PdfSharp.Xamarin for .NET Core Additionally Mi
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
     <PackageReference Include="SkiaSharp" Version="2.88.9" />
     <PackageReference Include="SixLabors.Fonts" Version="2.1.3" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.1" />
   </ItemGroup>
 	
   <ItemGroup>
