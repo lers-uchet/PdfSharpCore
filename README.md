@@ -8,6 +8,14 @@
 Additionally MigraDoc has been ported as well (from version 1.32).
 Image and font support has been implemented with [SkiaSharp](https://github.com/mono/SkiaSharp).
 
+### Linux native libraries
+
+SkiaSharp requires a native `libSkiaSharp` library. On Linux add the native assets package to your application:
+
+```xml
+<PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.119.4" />
+```
+
 
 ## Table of Contents
 

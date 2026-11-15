@@ -57,7 +57,10 @@ namespace TestConsole
         private static X509Certificate2 GetCertificate()
         {
             // add yours here
-            return new X509Certificate2("c:\\repos\\Secrets\\CodeSign\\Lers-SelfSigned.pfx", "doZa34Pqmvui-76", X509KeyStorageFlags.Exportable);
+            return X509CertificateLoader.LoadPkcs12FromFile(
+                "c:\\repos\\Secrets\\CodeSign\\Lers-SelfSigned.pfx",
+                "doZa34Pqmvui-76",
+                X509KeyStorageFlags.Exportable);
         }
 
         private class SignAppearenceHandler : ISignatureAppearanceHandler

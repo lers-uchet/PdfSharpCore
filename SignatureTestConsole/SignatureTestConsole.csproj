@@ -8,6 +8,10 @@
     <ProjectReference Include="..\PdfSharpCore\PdfSharpCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.119.4" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Update="TestFiles\doc1.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
